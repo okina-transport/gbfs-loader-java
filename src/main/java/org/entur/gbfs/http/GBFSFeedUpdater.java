@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.entur.gbfs.authentication.RequestAuthenticator;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +56,8 @@ public class GBFSFeedUpdater<T> {
     @NotNull RequestAuthenticator requestAuthenticator,
     @NotNull Class<T> implementingClass,
     Map<String, String> httpHeaders,
-    Long timeout
+    Long timeout,
+    @Nullable GBFSHttpClientEventHandler handler
   ) {
     this(
       url,
@@ -63,7 +65,7 @@ public class GBFSFeedUpdater<T> {
       implementingClass,
       httpHeaders,
       timeout,
-      new GBFSHttpClient(),
+      new GBFSHttpClient(handler),
       new UpdateStrategy()
     );
   }

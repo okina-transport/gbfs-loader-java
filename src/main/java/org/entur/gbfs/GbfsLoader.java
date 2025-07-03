@@ -2,6 +2,7 @@ package org.entur.gbfs;
 
 import java.util.Map;
 import org.entur.gbfs.authentication.RequestAuthenticator;
+import org.entur.gbfs.http.GBFSHttpClientEventHandler;
 import org.entur.gbfs.loader.v2.GbfsV2Loader;
 import org.entur.gbfs.loader.v3.GbfsV3Loader;
 import org.jetbrains.annotations.NotNull;
@@ -25,14 +26,16 @@ public class GbfsLoader {
     Map<String, String> httpHeaders,
     @NotNull String languageCode,
     RequestAuthenticator requestAuthenticator,
-    Long timeoutConnection
+    Long timeoutConnection,
+    GBFSHttpClientEventHandler handler
   ) {
     return new GbfsV2Loader(
       url,
       httpHeaders,
       languageCode,
       requestAuthenticator,
-      timeoutConnection
+      timeoutConnection,
+      handler
     );
   }
 
@@ -48,8 +51,15 @@ public class GbfsLoader {
     String url,
     Map<String, String> httpHeaders,
     RequestAuthenticator requestAuthenticator,
-    Long timeoutConnection
+    Long timeoutConnection,
+    GBFSHttpClientEventHandler handler
   ) {
-    return new GbfsV3Loader(url, httpHeaders, requestAuthenticator, timeoutConnection);
+    return new GbfsV3Loader(
+      url,
+      httpHeaders,
+      requestAuthenticator,
+      timeoutConnection,
+      handler
+    );
   }
 }

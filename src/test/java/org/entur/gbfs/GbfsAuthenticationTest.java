@@ -17,11 +17,11 @@ class GbfsAuthenticationTest {
 
   private CountDownLatch waiter;
 
-  private final String TEST_URL = "";
-  private final String TEST_LANGUAGE_CODE = "";
-  private final String TEST_TOKEN_URL = "";
-  private final String TEST_CLIENT_ID = "";
-  private final String TEST_CLIENT_PASSWORD = "";
+  private static final String TEST_URL = "";
+  private static final String TEST_LANGUAGE_CODE = "";
+  private static final String TEST_TOKEN_URL = "";
+  private static final String TEST_CLIENT_ID = "";
+  private static final String TEST_CLIENT_PASSWORD = "";
 
   @Test
   @Disabled("Test code provided to test live Oauth2 authentication")
@@ -72,6 +72,7 @@ class GbfsAuthenticationTest {
       null,
       null,
       requestAuthenticator,
+      null,
       null,
       null
     );

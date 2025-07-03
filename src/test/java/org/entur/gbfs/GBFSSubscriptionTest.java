@@ -92,7 +92,8 @@ class GBFSSubscriptionTest {
       null,
       null,
       null,
-      true
+      true,
+      null
     );
   }
 
@@ -143,6 +144,15 @@ class GBFSSubscriptionTest {
   }
 
   GbfsSubscriptionOptions getV3TestOptions(String url) throws URISyntaxException {
-    return new GbfsSubscriptionOptions(new URI(url), null, null, null, null, null, true);
+    return new GbfsSubscriptionOptions(
+      new URI(url),
+      null,
+      null,
+      null,
+      null,
+      null,
+      true,
+      null
+    );
   }
 }

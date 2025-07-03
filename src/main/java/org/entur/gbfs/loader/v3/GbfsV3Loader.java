@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.entur.gbfs.authentication.RequestAuthenticator;
+import org.entur.gbfs.http.GBFSHttpClientEventHandler;
 import org.entur.gbfs.loader.BaseGbfsLoader;
 import org.entur.gbfs.loader.GbfsFeed;
 import org.mobilitydata.gbfs.v3_0.gbfs.GBFSFeed;
@@ -30,7 +31,7 @@ public class GbfsV3Loader extends BaseGbfsLoader<GBFSFeed.Name, GBFSGbfs> {
    * @param httpHeaders Additional HTTP headers to be used in requests (e.g. auth headers)
    */
   public GbfsV3Loader(String url, Map<String, String> httpHeaders) {
-    this(url, httpHeaders, null, null);
+    this(url, httpHeaders, null, null, null);
   }
 
   /**
@@ -41,7 +42,7 @@ public class GbfsV3Loader extends BaseGbfsLoader<GBFSFeed.Name, GBFSGbfs> {
    *                             each request
    */
   public GbfsV3Loader(String url, RequestAuthenticator requestAuthenticator) {
-    this(url, new HashMap<>(), requestAuthenticator, null);
+    this(url, new HashMap<>(), requestAuthenticator, null, null);
   }
 
   /**
@@ -57,7 +58,7 @@ public class GbfsV3Loader extends BaseGbfsLoader<GBFSFeed.Name, GBFSGbfs> {
     RequestAuthenticator requestAuthenticator,
     Long timeoutConnection
   ) {
-    this(url, new HashMap<>(), requestAuthenticator, timeoutConnection);
+    this(url, new HashMap<>(), requestAuthenticator, timeoutConnection, null);
   }
 
   /**
@@ -72,9 +73,17 @@ public class GbfsV3Loader extends BaseGbfsLoader<GBFSFeed.Name, GBFSGbfs> {
     String url,
     Map<String, String> httpHeaders,
     RequestAuthenticator requestAuthenticator,
-    Long timeoutConnection
+    Long timeoutConnection,
+    GBFSHttpClientEventHandler handler
   ) {
-    super(url, httpHeaders, requestAuthenticator, timeoutConnection, GBFSGbfs.class);
+    super(
+      url,
+      httpHeaders,
+      requestAuthenticator,
+      timeoutConnection,
+      GBFSGbfs.class,
+      handler
+    );
     init();
   }
 

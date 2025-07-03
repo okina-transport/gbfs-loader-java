@@ -87,7 +87,8 @@ public class GbfsV2Subscription implements GbfsSubscription {
         subscriptionOptions.headers(),
         subscriptionOptions.languageCode(),
         subscriptionOptions.requestAuthenticator(), //
-        subscriptionOptions.timeout()
+        subscriptionOptions.timeout(),
+        subscriptionOptions.handler()
       );
   }
 

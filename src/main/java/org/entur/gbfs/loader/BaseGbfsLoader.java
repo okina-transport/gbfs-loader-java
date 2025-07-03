@@ -12,6 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.entur.gbfs.authentication.DummyRequestAuthenticator;
 import org.entur.gbfs.authentication.RequestAuthenticator;
 import org.entur.gbfs.http.GBFSFeedUpdater;
+import org.entur.gbfs.http.GBFSHttpClientEventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,8 @@ public abstract class BaseGbfsLoader<S, T> {
     Map<String, String> httpHeaders,
     RequestAuthenticator requestAuthenticator,
     Long timeoutConnection,
-    Class<T> discoveryFileClass
+    Class<T> discoveryFileClass,
+    GBFSHttpClientEventHandler handler
   ) {
     this.requestAuthenticator =
       Objects.requireNonNullElseGet(requestAuthenticator, DummyRequestAuthenticator::new);
@@ -45,7 +47,8 @@ public abstract class BaseGbfsLoader<S, T> {
         this.requestAuthenticator,
         discoveryFileClass,
         httpHeaders,
-        timeoutConnection
+        timeoutConnection,
+        handler
       );
   }
 
@@ -123,7 +126,8 @@ public abstract class BaseGbfsLoader<S, T> {
             requestAuthenticator,
             feed.implementingClass(),
             httpHeaders,
-            timeoutConnection
+            timeoutConnection,
+            null
           )
         );
         classMap.put(feed.implementingClass(), feedName);

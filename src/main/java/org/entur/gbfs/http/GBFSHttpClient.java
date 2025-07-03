@@ -20,6 +20,15 @@ public class GBFSHttpClient {
 
   private static final Logger LOG = LoggerFactory.getLogger(GBFSHttpClient.class);
   private static final long TIMEOUT_CONNECTION = 5000;
+  private final GBFSHttpClientEventHandler eventHandler;
+
+  public GBFSHttpClient() {
+    eventHandler = null;
+  }
+
+  public GBFSHttpClient(GBFSHttpClientEventHandler eventHandler) {
+    this.eventHandler = eventHandler;
+  }
 
   public InputStream getData(URI uri) throws IOException {
     return getData(uri, null);
@@ -42,17 +51,27 @@ public class GBFSHttpClient {
     }
     timeout = (timeout == null) ? TIMEOUT_CONNECTION : timeout;
     HttpClient httpclient = getClient(timeout);
-    HttpResponse response = httpclient.execute(httpget);
-    if (response.getStatusLine().getStatusCode() != 200) {
-      LOG.warn("Got non-200 status code: {}", response.getStatusLine().getStatusCode());
-      return null;
-    }
+    try {
+      HttpResponse response = httpclient.execute(httpget);
+      if (eventHandler != null) {
+        eventHandler.onGetDataSuccess(response.getStatusLine().getStatusCode(), uri);
+      }
+      if (response.getStatusLine().getStatusCode() != 200) {
+        LOG.warn("Got non-200 status code: {}", response.getStatusLine().getStatusCode());
+        return null;
+      }
 
-    HttpEntity entity = response.getEntity();
-    if (entity == null) {
-      return null;
+      HttpEntity entity = response.getEntity();
+      if (entity == null) {
+        return null;
+      }
+      return entity.getContent();
+    } catch (IOException e) {
+      if (eventHandler != null) {
+        eventHandler.onGetDataFailure(uri);
+      }
+      throw e;
     }
-    return entity.getContent();
   }
 
   public InputStream getData(URI uri, Map<String, String> requestHeaderValues)

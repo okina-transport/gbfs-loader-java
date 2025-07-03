@@ -21,6 +21,7 @@ package org.entur.gbfs;
 import java.net.URI;
 import java.util.Map;
 import org.entur.gbfs.authentication.RequestAuthenticator;
+import org.entur.gbfs.http.GBFSHttpClientEventHandler;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -37,6 +38,7 @@ import org.jetbrains.annotations.Nullable;
  * @param timeout Custom timeout value for http requests
  * @param enableValidation Will perform validation on all fetched data. The validation
  *                         result can be read in the consumer
+ * @param handler Handler triggered when requesting GBFS data from provider
  */
 public record GbfsSubscriptionOptions(
   URI discoveryURI,
@@ -45,5 +47,6 @@ public record GbfsSubscriptionOptions(
   @Nullable Map<String, String> headers,
   @Nullable RequestAuthenticator requestAuthenticator,
   @Nullable Long timeout,
-  @Nullable Boolean enableValidation
+  @Nullable Boolean enableValidation,
+  @Nullable GBFSHttpClientEventHandler handler
 ) {}

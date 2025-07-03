@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.entur.gbfs.authentication.RequestAuthenticator;
+import org.entur.gbfs.http.GBFSHttpClientEventHandler;
 import org.entur.gbfs.loader.BaseGbfsLoader;
 import org.entur.gbfs.loader.GbfsFeed;
 import org.entur.gbfs.loader.LanguageNotInFeedException;
@@ -47,7 +48,7 @@ public class GbfsV2Loader extends BaseGbfsLoader<GBFSFeedName, GBFS> {
    * @param languageCode The language code to be used to look up feeds in the discovery file
    */
   public GbfsV2Loader(String url, Map<String, String> httpHeaders, String languageCode) {
-    this(url, httpHeaders, languageCode, null, null);
+    this(url, httpHeaders, languageCode, null, null, null);
   }
 
   /**
@@ -63,7 +64,7 @@ public class GbfsV2Loader extends BaseGbfsLoader<GBFSFeedName, GBFS> {
     String languageCode,
     RequestAuthenticator requestAuthenticator
   ) {
-    this(url, new HashMap<>(), languageCode, requestAuthenticator, null);
+    this(url, new HashMap<>(), languageCode, requestAuthenticator, null, null);
   }
 
   /**
@@ -81,7 +82,14 @@ public class GbfsV2Loader extends BaseGbfsLoader<GBFSFeedName, GBFS> {
     RequestAuthenticator requestAuthenticator,
     Long timeoutConnection
   ) {
-    this(url, new HashMap<>(), languageCode, requestAuthenticator, timeoutConnection);
+    this(
+      url,
+      new HashMap<>(),
+      languageCode,
+      requestAuthenticator,
+      timeoutConnection,
+      null
+    );
   }
 
   /**
@@ -98,9 +106,10 @@ public class GbfsV2Loader extends BaseGbfsLoader<GBFSFeedName, GBFS> {
     Map<String, String> httpHeaders,
     String languageCode,
     RequestAuthenticator requestAuthenticator,
-    Long timeoutConnection
+    Long timeoutConnection,
+    GBFSHttpClientEventHandler handler
   ) {
-    super(url, httpHeaders, requestAuthenticator, timeoutConnection, GBFS.class);
+    super(url, httpHeaders, requestAuthenticator, timeoutConnection, GBFS.class, handler);
     this.languageCode = languageCode;
     init();
   }

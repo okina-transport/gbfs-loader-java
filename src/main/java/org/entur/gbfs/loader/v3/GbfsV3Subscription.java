@@ -84,7 +84,8 @@ public class GbfsV3Subscription implements GbfsSubscription {
         subscriptionOptions.discoveryURI().toString(),
         subscriptionOptions.headers(),
         subscriptionOptions.requestAuthenticator(),
-        subscriptionOptions.timeout()
+        subscriptionOptions.timeout(),
+        subscriptionOptions.handler()
       );
   }
 
