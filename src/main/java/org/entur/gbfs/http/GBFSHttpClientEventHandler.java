@@ -19,4 +19,11 @@ public interface GBFSHttpClientEventHandler {
    * @param uri producer URI
    */
   void onGetDataFailure(URI uri);
+
+  /**
+   * Link a feed URI (URI returned by call to gbfs.json = discovery URI) with its discovery URI (URI to a gbfs.json file)
+   * @param feedUri feed URI to link to
+   * @param discoveryUri discovery URI to link with
+   */
+  void registerFeedUri(URI feedUri, URI discoveryUri);
 }

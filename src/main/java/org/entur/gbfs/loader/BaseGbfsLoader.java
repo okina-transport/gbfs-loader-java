@@ -28,6 +28,7 @@ public abstract class BaseGbfsLoader<S, T> {
   private final Map<String, String> httpHeaders;
   private final RequestAuthenticator requestAuthenticator;
   private final Long timeoutConnection;
+  private final GBFSHttpClientEventHandler handler;
 
   protected BaseGbfsLoader(
     String discoveryUrl,
@@ -50,6 +51,7 @@ public abstract class BaseGbfsLoader<S, T> {
         timeoutConnection,
         handler
       );
+    this.handler = handler;
   }
 
   public synchronized void init() {
@@ -127,9 +129,10 @@ public abstract class BaseGbfsLoader<S, T> {
             feed.implementingClass(),
             httpHeaders,
             timeoutConnection,
-            null
+            handler
           )
         );
+        handler.registerFeedUri(feed.uri(), discoveryFileUpdater.getUrl());
         classMap.put(feed.implementingClass(), feedName);
       }
     }
