@@ -4,7 +4,7 @@
 
     <groupId>com.okina</groupId>
     <artifactId>gbfs-loader-java</artifactId>
-    <version>4.1.1-mobi-iti-SNAPSHOT</version>
+    <version>4.1.0-mobi-iti</version>
 
     <name>gbfs-loader-java</name>
     <description>Manage loading of GBFS feeds</description>
